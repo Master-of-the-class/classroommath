@@ -85,12 +85,12 @@
     <div class="answer" id="sub2Answer"></div>
 
     <div class="buttons">
-      <button onclick="generateProblems()">Nouveaux calculs</button>
-      <button onclick="toggleAnswers()" id="toggleBtn">
-        Afficher les réponses
-      </button>
-    </div>
-  </div>
+  <button onclick="generateProblems()">Nouveaux calculs</button>
+  <button onclick="toggleAnswers()" id="toggleBtn">
+    Afficher les réponses
+  </button>
+  <button onclick="goBack()">Retour</button>
+</div>
 
   <script>
     let results = {};
@@ -162,6 +162,9 @@
     }
 
     generateProblems();
+function goBack() {
+  window.location.href = "index.html";
+}
   </script>
 
 </body>
