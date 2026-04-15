@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-left: 5vw;
+    }
+
+    .problem {
+      font-size: 8vw;
+      margin: 2vh 0;
+      text-align: left;
+    }
+
+    .answer {
+      font-size: 5vw;
+      color: green;
+      display: none;
+      text-align: left;
+    }
+
+    .buttons {
+      margin-top: 3vh;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 1vh 2vw;
+      font-size: 2vw;
+      cursor: pointer;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 600px) {
+      .problem {
+        font-size: 12vw;
+      }
+
+      .answer {
+        font-size: 7vw;
+      }
+
+      button {
+        font-size: 4vw;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="problem" id="add1"></div>
+    <div class="answer" id="add1Answer"></div>
+
+    <div class="problem" id="add2"></div>
+    <div class="answer" id="add2Answer"></div>
+
+    <div class="problem" id="sub1"></div>
+    <div class="answer" id="sub1Answer"></div>
+
+    <div class="problem" id="sub2"></div>
+    <div class="answer" id="sub2Answer"></div>
+
+    <div class="buttons">
+      <button onclick="generateProblems()">Nouveaux calculs</button>
+      <button onclick="toggleAnswers()" id="toggleBtn">
+        Afficher les réponses
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let results = {};
+
+    function randomDecimal() {
+      // nombre entre 100.01 et 9999.99
+      let num = Math.random() * (9999.99 - 100.01) + 100.01;
+      return Math.round(num * 100) / 100;
+    }
+
+    function formatFR(n) {
+      return n.toFixed(2).replace('.', ',');
+    }
+
+    function generateProblems() {
+      // Additions
+      let a = randomDecimal();
+      let b = randomDecimal();
+      let c = randomDecimal();
+      let d = randomDecimal();
+
+      // Soustractions
+      let e = randomDecimal();
+      let f = randomDecimal();
+      let g = randomDecimal();
+      let h = randomDecimal();
+
+      if (e < f) [e, f] = [f, e];
+      if (g < h) [g, h] = [h, g];
+
+      results = {
+        add1: a + b,
+        add2: c + d,
+        sub1: e - f,
+        sub2: g - h
+      };
+
+      document.getElementById("add1").textContent =
+        `${formatFR(a)} + ${formatFR(b)} = ?`;
+      document.getElementById("add2").textContent =
+        `${formatFR(c)} + ${formatFR(d)} = ?`;
+      document.getElementById("sub1").textContent =
+        `${formatFR(e)} - ${formatFR(f)} = ?`;
+      document.getElementById("sub2").textContent =
+        `${formatFR(g)} - ${formatFR(h)} = ?`;
+
+      document.getElementById("add1Answer").textContent = formatFR(results.add1);
+      document.getElementById("add2Answer").textContent = formatFR(results.add2);
+      document.getElementById("sub1Answer").textContent = formatFR(results.sub1);
+      document.getElementById("sub2Answer").textContent = formatFR(results.sub2);
+
+      document.querySelectorAll(".answer").forEach(el => el.style.display = "none");
+      document.getElementById("toggleBtn").textContent = "Afficher les réponses";
+    }
+
+    function toggleAnswers() {
+      let answers = document.querySelectorAll(".answer");
+      let button = document.getElementById("toggleBtn");
+
+      let isVisible = answers[0].style.display === "block";
+
+      answers.forEach(el => {
+        el.style.display = isVisible ? "none" : "block";
+      });
+
+      button.textContent = isVisible
+        ? "Afficher les réponses"
+        : "Cacher les réponses";
+    }
+
+    generateProblems();
+  </script>
+
+</body>
+</html>

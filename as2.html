@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-left: 5vw;
+    }
+
+    .problem {
+      font-size: 8vw;
+      margin: 2vh 0;
+      text-align: left;
+    }
+
+    .answer {
+      font-size: 5vw;
+      color: green;
+      display: none;
+      text-align: left;
+    }
+
+    .buttons {
+      margin-top: 3vh;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 1vh 2vw;
+      font-size: 2vw;
+      cursor: pointer;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 600px) {
+      .problem {
+        font-size: 12vw;
+      }
+
+      .answer {
+        font-size: 7vw;
+      }
+
+      button {
+        font-size: 4vw;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="problem" id="addition"></div>
+    <div class="answer" id="additionAnswer"></div>
+
+    <div class="problem" id="subtraction"></div>
+    <div class="answer" id="subtractionAnswer"></div>
+
+    <div class="buttons">
+      <button onclick="generateProblems()">Nouveaux calculs</button>
+      <button onclick="toggleAnswers()" id="toggleBtn">
+        Afficher les réponses
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let addResult = 0;
+    let subResult = 0;
+
+    function random4Digit() {
+      return Math.floor(Math.random() * 9000) + 1000;
+    }
+
+    function generateProblems() {
+      let a = random4Digit();
+      let b = random4Digit();
+
+      let c = random4Digit();
+      let d = random4Digit();
+
+      if (c < d) {
+        [c, d] = [d, c];
+      }
+
+      addResult = a + b;
+      subResult = c - d;
+
+      document.getElementById("addition").textContent =
+        `${a} + ${b} = ?`;
+      document.getElementById("subtraction").textContent =
+        `${c} - ${d} = ?`;
+
+      document.getElementById("additionAnswer").textContent =
+        `${addResult}`;
+      document.getElementById("subtractionAnswer").textContent =
+        `${subResult}`;
+
+      document.getElementById("additionAnswer").style.display = "none";
+      document.getElementById("subtractionAnswer").style.display = "none";
+      document.getElementById("toggleBtn").textContent = "Afficher les réponses";
+    }
+
+    function toggleAnswers() {
+      let addAns = document.getElementById("additionAnswer");
+      let subAns = document.getElementById("subtractionAnswer");
+      let button = document.getElementById("toggleBtn");
+
+      let isVisible = addAns.style.display === "block";
+
+      if (isVisible) {
+        addAns.style.display = "none";
+        subAns.style.display = "none";
+        button.textContent = "Afficher les réponses";
+      } else {
+        addAns.style.display = "block";
+        subAns.style.display = "block";
+        button.textContent = "Cacher les réponses";
+      }
+    }
+
+    generateProblems();
+  </script>
+
+</body>
+</html>
